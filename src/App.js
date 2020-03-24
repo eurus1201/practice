@@ -38,12 +38,14 @@ function App() {
 
   console.log(count)
 
-  const list = (!!count && count.map(renderItem))
+  const list = !!count && setInterval(()=>{
+    count.map(renderItem);
+  },1000);
 
   return <>
     <div>
-      {count}
-    {!!count && {list}}
+      {count}s
+      {list}
     </div>
 
     <button className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
