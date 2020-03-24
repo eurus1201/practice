@@ -3,16 +3,25 @@ import './App.css';
 
 function App() {
   const [count, setCount] = useState(0);
-  const [items, setItems] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
   const toggel = () => {
     setIsActive(!isActive);
   }
+  // const count= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+
+  const renderItem = (item) => {
+    return [
+      <>
+        <li>{item}</li>
+      </>
+    ]
+  }
+
 
   const stop = () => {
     setCount(0);
-    setIsActive(false);
+    setIsActive(!isActive);
   }
 
   useEffect(() => {
@@ -20,34 +29,21 @@ function App() {
     if (isActive) {
       interval = setInterval(() => {
         setCount(count => count + 1);
-        setItems(items.map((item,selectedIndex)=>renderItem(item, selectedIndex)));
       }, 1000);
     } else if (!isActive && count !== 0) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, count , items]);
+  }, [isActive, count ]);
 
-  const renderItem = (item, selectedIndex) => {
-    return [
-      1 + selectedIndex,
-      <>
-        <li>{item}</li>
-      </>
-    ]
-  }
+  console.log(count)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('This will run every second!');
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const list = count.map(renderItem)
 
   return <>
     <div>
       {count}
-      {/* {renderItem()} */}
+      {list}
     </div>
 
     <button className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
