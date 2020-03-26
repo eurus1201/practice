@@ -2,53 +2,41 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState([0]);
-  const [isTrue, setIsTrue] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [items, setItems] = useState([0]);
+  const [active, setActive] = useState(false);
 
-  const toggel = () => {
-    setIsActive(true);
-    setIsTrue(false);
+  const toggel=()=>{
+    setActive(!active)
   }
-
-  let i = 0
- useEffect(()=>{
-   setInterval(() => {   
-     setCount(count=>count=i++)
-   }, 1000);
- })
 
   useEffect(()=>{
-    if (!isTrue) {
-      setInterval(() => {
-        count.push(i++)
+    let interval = null;
+    if(active){
+      interval = setInterval(() => {
+        setItems(items => [...items, items++])
       }, 1000);
-
-    }else if(!isActive){
-      setInterval(() => {
-        count.unshift(i--)
-      }, 1000);
+    }else if(!active) {
+      clearInterval(interval);
     }
-  },[isTrue,isActive])
-      
+    return () => clearInterval(interval);
+  },[active,items])
+
   const stop = () => {
-    setIsActive(!isActive);
-    setIsActive(!isTrue);
+    setActive(active);
+    setItems([0]);
   }
-console.log(count)
-  return <>
 
+  return (
     <div>
-      {count}
+    <div>
+    {items.map((items,i)=><li key={i}>{items}<input></input></li>)}
     </div>
-
-    <button className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
-      onClick={toggel} >
-      {isActive ? 'revers' : 'toggel'}
-    </button>
-    <button
-      onClick={stop}>stop</button>
-  </>
+      <button onClick={toggel} >
+        toggel
+      </button>
+      <button onClick={stop}>stop</button>
+    </div>
+  )
 }
 
 export default App;
