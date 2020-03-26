@@ -35,11 +35,11 @@ function App() {
     setIsActive(!isActive);
     setIsActive(!isTrue);
   }
-console.log(ar)
+console.log(count)
   return <>
 
     <div>
-      {ar}
+      {count}
     </div>
 
     <button className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
