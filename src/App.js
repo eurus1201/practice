@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  // const [count, setCount] = useState([0]);
+  const [count, setCount] = useState([0]);
   const [isTrue, setIsTrue] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
@@ -12,29 +12,30 @@ function App() {
   }
 
   let i = 0
-  let ar = [i]
+ useEffect(()=>{
+   setInterval(() => {   
+     setCount(count=>count=i++)
+   }, 1000);
+ })
+
   useEffect(()=>{
     if (!isTrue) {
       setInterval(() => {
-        ar.push(++i)
+        count.push(i++)
       }, 1000);
+
     }else if(!isActive){
       setInterval(() => {
-        ar.unshift(--i)
+        count.unshift(i--)
       }, 1000);
     }
   },[isTrue,isActive])
       
-  
-
   const stop = () => {
     setIsActive(!isActive);
     setIsActive(!isTrue);
   }
-
-
- 
-
+console.log(ar)
   return <>
 
     <div>
