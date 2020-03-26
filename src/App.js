@@ -2,47 +2,43 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState([[0]]);
+  // const [count, setCount] = useState([0]);
+  const [isTrue, setIsTrue] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
   const toggel = () => {
-    setIsActive(!isActive);
+    setIsActive(true);
+    setIsTrue(false);
   }
 
-  const renderItem = (item) => {
-    return [
-      <>
-        <li>{item}</li>
-      </>
-    ]
-  }
-
-
-  const stop = () => {
-    setCount([[0]]);
-    setIsActive(!isActive);
-  }
-
-  useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        setCount(count => count + 1);
+  let i = 0
+  let ar = [i]
+  useEffect(()=>{
+    if (!isTrue) {
+      setInterval(() => {
+        ar.push(++i)
       }, 1000);
-    } else if (!isActive && count !== 0) {
-      clearInterval(interval);
+    }else if(!isActive){
+      setInterval(() => {
+        ar.unshift(--i)
+      }, 1000);
     }
-    return () => clearInterval(interval);
-  }, [isActive, count ]);
-
-  console.log(count)
-
-  const list = !!count&& count.push(renderItem);
+  },[isTrue,isActive])
+      
   
 
+  const stop = () => {
+    setIsActive(!isActive);
+    setIsActive(!isTrue);
+  }
+
+
+ 
+
   return <>
+
     <div>
-      {list}
+      {ar}
     </div>
 
     <button className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
