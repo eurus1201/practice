@@ -3,14 +3,16 @@ import React, { useEffect, useState } from 'react';
 function App() {
   const [items, setItems] = useState([]);
   const [add, setAdd] = useState(true);
-  const [counter, setCounter] = useState(0);
+  const [reverse, setReverse] = useState(false);
+  const [counter, setCounter] = useState([]);
 
   const toggel = () => {
-    setAdd(!add)
+    setAdd(!add);
+    setReverse(!reverse)
   }
 
   const count = () => {
-    let i=0
+    let i = 0 ;
     if (add) {
         setCounter(i++);
     } else if (!add) {
@@ -27,7 +29,7 @@ function App() {
       interval = setInterval(() => {
         setItems(items => [...items,`${counter}`])
       }, 1000);
-    } else if (!add && items!== 0) {
+    } else if (reverse && items!== 0) {
       interval = setInterval(() => {
         setItems(items => [`${counter}`, ...items])
       }, 1000);
@@ -36,9 +38,8 @@ function App() {
   }, [add])
 
   const stop = () => {
-    setAdd(false);
-    setItems([0])
-  }
+    setAdd(!add);
+}
 
   return (
     <div>
