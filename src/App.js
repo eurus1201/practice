@@ -13,35 +13,35 @@ function App() {
     setReverse(!reverse)
   }
 
-  // const count = () => {
-  //   if (add) {
-  //       setCounter(counterRef.current = counterRef.current+1);
-  //   } else if (!add) {
-  //       setCounter(counterRef.current = counterRef.current-1);
-  //   }
-  // }
-
-  // useEffect(()=>{
-  //   count()
-  // },[])
-
-  useEffect(() => {
+  const count = () => {
     if (add) {
-      counterRef.current = counterRef.current++;
-    }else if (!add){
-      counterRef.current = counterRef.current--;
+        setCounter(counterRef.current = counterRef.current+1);
+    } else if (!add) {
+        setCounter(counterRef.current = counterRef.current-1);
     }
-  }, [])
+  }
+
+  useEffect(()=>{
+    count()
+  },[])
+
+  // useEffect(() => {
+  //   if (add) {
+  //     counterRef.current = counterRef.current++;
+  //   }else if (!add){
+  //     counterRef.current = counterRef.current--;
+  //   }
+  // }, [])
 
   useEffect(() => {
     let interval = null;
     if (add) {
       interval = setInterval(() => {
-        setItems(items => [...items,`${counterRef}`])
+        setItems(items => [...items,`${counter}`])
       }, 1000);
     } else if (reverse && !add &&items!== 0) {
       interval = setInterval(() => {
-        setItems(items => [`${counterRef}`, ...items])
+        setItems(items => [`${counter}`, ...items])
       }, 1000);
     }
     intervalRef.current = interval;
