@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 
 function App() {
   const [items, setItems] = useState([]);
   const [add, setAdd] = useState(true);
   const [reverse, setReverse] = useState(false);
-  const [counter, setCounter] = useState([]);
+  // const [counter, setCounter] = useState([]);
+  const counter = useRef(0);
+  const intervalRef = useRef();
 
   const toggel = () => {
     setAdd(!add);
     setReverse(!reverse)
   }
-
-  const count = () => {
-    let i = 0 ;
-    if (add) {
-        setCounter(i++);
-    } else if (!add) {
-        setCounter(--i);
-    }
-  }
+  // const count = () => {
+  //   let i = 0 ;
+  //   if (add) {
+  //       setCounter(i++);
+  //   } else if (!add) {
+  //       setCounter(--i);
+  //   }
+  // }
   useEffect(() => {
-    count()
+    counter.current = counter.current + 1;
   }, [])
 
   useEffect(() => {
@@ -34,11 +35,14 @@ function App() {
         setItems(items => [`${counter}`, ...items])
       }, 1000);
     }
-    return () => clearInterval(interval);
+    intervalRef.current = interval;
+
+    return () => clearInterval(intervalRef.current);
   }, [add])
 
   const stop = () => {
     setAdd(!add);
+    clearInterval(intervalRef.current);
 }
 
   return (
@@ -47,9 +51,11 @@ function App() {
         {items.map((item, i) => <li key={i}>{item}<input></input></li>)}
       </div>
       <button onClick={toggel} >
-        toggel
+        {reverse ? 'revers' : 'toggel'}
       </button>
-      <button onClick={stop}>stop</button>
+      <button onClick={stop}>
+        {add?'stop':'start'}
+        </button>
     </div>
   )
 }
