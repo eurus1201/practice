@@ -4,8 +4,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [add, setAdd] = useState(true);
   const [reverse, setReverse] = useState(false);
-  const [counter, setCounter] = useState([]);
-  const counterRef = useRef(0);
+  let [counter, setCounter] = useState([]);
   const intervalRef = useRef();
 
   const toggel = () => {
@@ -13,35 +12,30 @@ function App() {
     setReverse(!reverse)
   }
 
-  const count = () => {
-    if (add) {
-        setCounter(counterRef.current = counterRef.current+1);
-    } else if (!add) {
-        setCounter(counterRef.current = counterRef.current-1);
-    }
-  }
+  const count = () => setCounter(counter++);
 
-  useEffect(()=>{
-    count()
-  },[])
+  // useEffect(()=>{
+  //   count()
+  // },[])
 
   // useEffect(() => {
   //   if (add) {
-  //     counterRef.current = counterRef.current++;
+  //     counter = counter+1;
   //   }else if (!add){
-  //     counterRef.current = counterRef.current--;
+  //     counter = counter-1;
   //   }
   // }, [])
 
   useEffect(() => {
+    count();
     let interval = null;
     if (add) {
       interval = setInterval(() => {
-        setItems(items => [...items,`${counter}`])
+        setItems(items => [...items,`${counter++}`])
       }, 1000);
-    } else if (reverse && !add &&items!== 0) {
+    } else if (reverse &&items!== 0) {
       interval = setInterval(() => {
-        setItems(items => [`${counter}`, ...items])
+        setItems(items => [`${counter--}`,...items])
       }, 1000);
     }
     intervalRef.current = interval;
