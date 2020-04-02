@@ -1,25 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 
 function App() {
-    const [count, setCount] = useState([0]);
-    const [item, setItem] = useState([]);
+    const [count, setCount] = useState(0);
+    const [items, setItem] = useState([]);
+    // const [add,setAdd]=useState(true);
     const intervalRef = useRef();
 
-
+    const handleCancel = () => {
+        // setAdd(!add);
+        clearInterval(intervalRef.current);
+    }
     useEffect(() => {
-        const id = setInterval(() => {
-            setCount(count => [+ count + 1])
-            setItem(item => [...item, `${count}`])
+        intervalRef.current = setInterval(() => {
+            setCount(c=> c+1)
+            setItem(items => [...items,count])
         }, 1000);
-        intervalRef.current = id;
         return () => clearInterval(intervalRef.current);
-    }, [count]);
-    const handleCancel = () => clearInterval(intervalRef.current);
-
+    }, [items]);
+ 
     return (
         <>
             <div>
-                {item.map((item, i) => <li key={i}>{item}<input></input></li>)}
+                {items.map((item, i) => <li key={i}>{item}<input></input></li>)}
             </div>
             <div>
                 <button>
