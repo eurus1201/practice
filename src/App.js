@@ -3,11 +3,9 @@ import React, { useState, useEffect, useRef } from "react";
 function App() {
     const [count, setCount] = useState(0);
     const [items, setItem] = useState([]);
-    // const [add,setAdd]=useState(true);
     const intervalRef = useRef();
 
     const handleCancel = () => {
-        // setAdd(!add);
         clearInterval(intervalRef.current);
     }
     useEffect(() => {
@@ -16,7 +14,7 @@ function App() {
             setItem(items => [...items,count])
         }, 1000);
         return () => clearInterval(intervalRef.current);
-    }, [items]);
+    });
  
     return (
         <>
